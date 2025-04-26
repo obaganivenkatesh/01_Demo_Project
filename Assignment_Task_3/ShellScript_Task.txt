@@ -1,0 +1,73 @@
+14) Write a shell script that installs nginx on an Ubuntu EC2 instance and sets up two websites (site1.com and site2.com) using different server blocks (virtual hosts).
+
+Ans:-
+---
+#!/bin/bash
+
+# Update Packages
+sudo apt update -y
+
+# Install nginx
+sudo  apt install nginx -y
+
+# Start nginx and enable on boot
+sudo systemctl start nginx
+sudo systemctl enable nginx
+
+#Create root directories for both sites
+sudo mkdir -p /var/www/site1.com/html
+sudo mkdir -p /var/www/site2.com/html
+
+# Set Permissions
+sudo chown -R $USER:$USER /var/www/site1.com/html
+sudo chown -R $USER:$USER /var/www/site2.com/html
+
+# Create simple index.html pages
+echo "<html><head><title>Site 1</title></head><body><h1> Welcome to Site 1 </h1></body></html>" | sudo tee /var/www/site1.com/html/index.html
+echo "<html><head><title>Site 2</title></head><body><h1> Welcome to Site 2 </h1></body></html>" | sudo tee /var/www/site2.com/html/index.html
+
+# Create Server block config for site1.com
+sudo tee /etc/nginx/sites-available/site1.com > /dev/null <<EOF
+server {
+   listen 80;
+   server_name site1.com
+   www.site1.com;
+   
+   root /var/www/site1.com/html;
+   index index.html;
+   
+   location / {
+         try_files \$uri \$uri/ =404;
+		 
+		 }
+}
+EOF
+
+# Create server block config for site2.com
+sudo tee /etc/nginx/sites-available/site2.com > /dev/null <<EOF
+server {
+   listen 80;
+   server_name site2.com
+   www.site1.com;
+   
+   root /var/www/site2.com/html;
+   index index.html;
+   
+   location / {
+         try_files \$uri \$uri/ =404;
+		 
+		 }
+}
+EOF
+
+# Enable the two sites
+sudo ln -s /etc/nginx/sites-available/site1.com /etc/nginx/sites-enabled/
+sudo ln -s /etc/nginx/sites-available/site2.com /etc/nginx/sites-enabled/
+
+# Test nginx configuration
+sudo nginx -tab
+
+# Reload nginx to apply changes
+sudo systemctl reload nginx
+
+echo "Setup complete! Nginx is serving Site1.com and site2.com"
