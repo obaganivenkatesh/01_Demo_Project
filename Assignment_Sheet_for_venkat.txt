@@ -1,0 +1,643 @@
+1. What is the difference between Git and GitHub? Explain with examples.
+Ans:-
+---
+Git :-
+---
+1. Git is a version control system.
+2. It runs on your computer and helps you track changes in your code, collaborate with others, and manage different versions of a project.
+
+examples:-
+---------
+git init
+git status
+git add filename.txt.
+
+
+Github:-
+------
+1. Github is a hosting service for git repositories.
+2. It's a website where you can store your git-tracked projects online, collaborate with others, review code, and manage issues.
+
+examples:-
+---------
+Go to github.com
+click "New repository"
+Name it (e.g., my-project)
+click "Create repository"
+
+2. Write the Git commands for the following scenario:
+
+
+Initialize a new repository?
+
+ans :-
+
+git init
+
+
+Add all files to the staging area?
+
+git add *
+
+
+Commit with a message "Initial commit"?
+
+git commit -m "Initial commit".
+
+
+Push the code to a GitHub repository?
+
+git push.
+
+
+How would you resolve a merge conflict in Git?
+
+
+Provide a simple situation where conflicts occur and how to solve them.
+
+
+Ans:-
+---
+
+Let's say two branches edit the same line of a file:
+
+you are on develop and you create a branch called feature
+
+git checkout -b feature
+
+In feature, you edit login.txt like this:
+
+class car {
+
+int a=10;
+
+}
+
+Then commit it:
+
+git add login.txt
+git commit -m " Update from feature"
+
+Now switch back to develop and change the same line:
+
+class car {
+
+int a=20;
+
+}
+
+Then commit:
+
+git add login.txt
+git commit -m "Update from develop"
+
+Now, try to merge feature into develop:
+
+git merge featue.
+
+you will get a merge conflict because both branches changes the same line.
+
+How to reslove it:-
+-------------------
+
+1. Open the conflicted file (login.txt)
+you 'll see something like:
+
+--------develop-------
+int a=10
+======================
+int a=20
+-------feature--------
+
+2. Manually edit the file to keep what you want:
+
+example:
+
+int a=20;
+
+3. Make it as resolved:
+
+git add login.txt
+
+4. complete the merge:
+
+git commit
+
+Now your merge is complete.
+
+4)  Explain the purpose of .gitignore file with an example.
+
+The .gitignore file tells git which files or folders to ignore-meaning git won't track them or include them in commits.
+
+Purpose:
+---------
+
+Keep unnecessary,sensitive, or temporary files out of your repo(e.g.,binaries,environment configs like .env etc.)
+
+
+Example:-
+----------
+.gitignore file
+
+#Ignore node dependencies
+ node_modules/
+ 
+#Ignore log files
+*.log
+
+#Ignore OS or editor-specific files .DS_Store
+.vscode/
+
+#Ignore environment variables
+.env
+
+with this .gitignore file:
+
+* any file ending in .log
+* any file/folder named
+node_modules, .vscode, .env, etc.
+
+will not be tracked of committed by git.
+
+5. Explain the differences among the following Git operations:
+
+
+git pull :- 
+----------
+
+To take latest changes from repository we will use git pull command.
+
+syntax : git pull
+
+
+git fetch:-
+----------
+
+git fetch retrieves the latest changes from the remote repo but does not merge them into your current branch.
+
+syntax: git fetch <remote> <branch>
+
+
+git clone:-
+----------
+git clone copies all the files,commit history, and branches from a remote repository to your local machine.
+
+syntax: git clone <repo-url>
+
+6) What are the different types of Git reset (--soft, --mixed, --hard) and what does each one do?
+
+Ans:-
+---
+
+1) git reset --soft HEAD~1:-
+----------------------------
+
+Removes the last commit but keeps your changes staged.
+
+2) git reset --mixed HEAD~1:-
+-----------------------------
+Unstages the last commit but keeps your code uncommitted.
+
+3) git reset --hard HEAC~1:-
+----------------------------
+Deletes the last commit and discards any code changes.Be careful!.
+
+
+Section 2: AWS EC2 and Load Balancers (4 Questions)
+
+7) Describe the types of EC2 instances available (On-Demand, Reserved, Spot, Savings Plan) and explain the differences among them.
+
+1) On-demand instances:-
+------------------------
+1) Fixed price(Hourly)
+2) Pay for what you have used.
+3) Pay per hour.
+4) No commitment.
+5) No Upfront payment.
+6) No predictible Usage.
+
+2) Reserved instances:-
+-----------------------
+1) Long term commitment.
+2) 1 or 3 years
+3) Upfront payment(full, partial)
+4) 72% discount on hourly price.
+5) Predictible Usage
+
+3) Spot instances:-
+------------------
+1) Bidding
+2) Auctioning
+3) Huge capacity for cheaper price
+4) 90% discount
+5) Can loose instances
+6) Most cost effective instances in AWS.
+
+4) Savings Plan:-
+-----------------
+1) Same as RI model but it has little bit diff stragey.
+2) 1 or 3 years, commitment to the amount of usage long workloads.
+3) Get discount based on long term usage, locked to specific instance family and region.
+4) flexible across instance size,os,tenancy.
+
+8) What is an Elastic Load Balancer (ELB)?
+
+
+Name different types of load balancers AWS offers and when to use them.
+
+
+1) ELB which distribute the traffic to multiple ec2 instances across AZ'S.
+2) ELB is completely managed by AWS.
+3) ELB is a service by AWS, not a server for us.
+4) ELB can be accessed by URL(DNS Name), you cannot login to the ELB.
+5) ELB has the IP address, but those are dynamic.
+6) Aws always recommend to use the ELB DNS Name not Ip address.
+
+Types of Elastic Load Balancers:-
+--------------------------------
+1) Application Load Balancer:-
+-----------------------------
+1) ALB
+2) Latest Generation
+3) Http and Https
+4) default choose in ALB.
+5) Best for Micro_Services.
+
+2) Network Load Balancer:-
+------------------------
+1) NLB
+2) Latest Geneeration
+3) TCP and UDP
+4) Extreme high performance.
+5) Network level
+6) 1 static ip per AZ.
+
+3) Classic Load Balancer:-
+-------------------------
+1) CLB
+2) Http,Https and TCP
+3) Previous Generation
+
+4) Gateway Load Balancer:-
+-------------------------
+1) GLB
+2) Deploy and manage, Scale a fleet of 3rd party  network virtual appliances in aws.
+3) Firewall, Prevention systems, Deep Packet Inspection etc.
+4) GENEVE on 6081.
+
+9) Explain how you would configure a load balancer to distribute traffic between two EC2 instances hosting the same website.
+
+Ans:-
+----
+1. Launch EC2 Instances:-
+------------------------
+* Launch two EC2 instances in the  same vpc.
+* Install and configure your website on both instances.
+* Ensure both use the same security group that allows HTTP (Port 80).
+
+2. Create a Target Group:-
+-------------------------
+* Go to the EC2 Dashboard > Target Groups  > Create Target Group.
+* Choose Instances as the target type.
+* Set the protocol to HTTP and the port to 80.
+* Register both EC2 instances in this target group.
+
+3. Create a Load Balancer:-
+-------------------------
+* Go to Load Balancers > Create Load Balancer.
+* Choose Application Load Balancer (for HTTP/HTTPS traffic).
+* Name your load balancer.
+* Choose at least 2 subnets in differnet Availability Zones for high availability.
+* Select a security group that allows inbound HTTP/HTTPS traffic.
+
+4. Configure Listener:-
+----------------------
+* Add a listener on port 80(HTTP).
+* Forward requests to the target group you created earlier.
+
+5. Test the setup:-
+------------------
+* Once the load balancer is active, copy the DNS name provided by AWS.
+* Open it in your browser-traffic should automatically be distributed across both instances.
+
+10) If one EC2 instance under a load balancer becomes unhealthy, what happens automatically? How can you monitor this?
+
+Ans:-
+----
+What happens if one EC2 instance becomes unhealthy?
+
+* The load balancer stops sending traffic to the unhealthy EC2 instance.
+* Traffic is automatically redirected only to the healthy instance(s).
+* This ensures your website remains available without manual intervention.
+
+How can you monitor this?
+
+* The load balancer regularly pings the registered instances using health checks (HTTP,TCP,or HTTPS).
+* You can configure how often and what endpoint(like/health) it checks.
+
+AWS Console Monitoring:-
+----------------------
+* Go to EC2 > Load Balancers > Select your Load Balancer.
+* Under the "Target Groups" tab, check the Targets.
+* You'll see each instance's health status (healthy/Unhealthy).
+
+11) How do you create an S3 bucket and upload a file using the AWS Management Console?
+
+
+(List the important settings like region, permissions.)
+
+Ans:-
+----
+1. Sign in to AWS Management Console:-
+------------------------------------
+
+* Go to
+https://console.aws.amazon.com/s3/
+
+2. Create an S3 Bucket:-
+----------------------
+* Click "Create bucket"
+* Bucket name: Must be globally unique (e.g., ap-south-1a or ap-south-1b)
+
+3. Configure Important Settings:-
+--------------------------------
+* Block Public Access:
+
+* Leave "Block all public access" enabled(default) if it's private.
+* Disable it only if you want to make files public, like a website.
+
+* Versioning(Optional):-
+----------------------
+* Enable if you want to keep past versions of files.
+
+* Encryption (Optional):-
+------------------------
+* Enable if you want s3 to automatically encrypt your files(SSE-S3 or SSE-KMS)
+
+* Tags /Logging /Object Ownership:-
+----------------------------------
+* Configure as needed - for cost tracking or access controls.
+* Click "Create bucket"
+
+4. Upload a File:-
+-----------------
+* Click the bucket name you just created.
+* Click "Upload"
+* Drag and drop or choose a file from your system.
+* Click "Upload" to complete.
+
+5. Set File Permissions (if needed):-
+------------------------------------
+* By default, files are private
+* To make a file public (e.g., for a public image or website file).
+    * Select the file after upload
+	* Click "Actions" > "Make public" (or manage permissions manually).
+	
+Optional : Get the File URL :-
+-----------------------------
+* Click on the file.
+* You will see the Object URL, Which you can use to access the file directly.
+
+12) How would you host a static website using an S3 bucket?
+
+
+(Mention website hosting option, bucket policy for public access.)
+
+Ans:-
+----
+1) Create an S3 Bucket:-
+-----------------------
+* Go to the AWS Management Console>S3>Create bucket
+* Bucket Name: (e.g., my-static-site)
+* Region: Pick the closest AWS region to your audience.
+* Important: The bucket name must match your website domain (if you plan to use a custom domain later).
+
+2) Disable Block Public Access:-
+------------------------------
+* During creation of after, uncheck "Block all public access" settings.
+* Confirm that you allow public access.
+
+3) Enable Static Website Hosting:-
+--------------------------------
+
+* Open the bucket > go to Properties tab.
+* Scroll to Static Website Hosting.
+* Click Edit and Enable.
+Set:
+    * Index document: e.g index.html
+	* (Optional) Error document: e.g., error.html
+	
+* Save changes.
+
+4) Upload Website Files:-
+------------------------
+* Upload your HTML,CSS,JS files(e.g.,index.html, style.css, etc.,) into the bucket.
+
+5) Add a Bucket Policy for Public Access.
+----------------------------------------
+1. You need a bucket policy to allow public reads.
+2. Go to Permissions > Bucket Policy and Paste something like:
+
+{
+  "Version": "2012-10-17",
+  "Statement": [
+  {
+    "Sid": "PublicReadGetObject",
+	"Effect": "Allow",
+	"Principal": "*",
+	"Action": "s3:GetObject",
+	"Resource":
+	""arn:aws:s3:::my-static-site/*"
+	}
+	]
+	}
+	
+* Replace my-static-site with your bucket's name.
+
+6)   Access your Website:-
+-------------------------
+* After enabling hosting, AWS will provide a Bucket Website Endpoint URL (e.g., http://my-static-site.s3-website-us-east-1.amazon.com).
+* Open it in a browser -- your static site should be live.
+
+13) What are the major differences between S3 Standard Storage Class and S3 Glacier Storage Class?
+
+Ans:-
+---
+While uploading the objects into s3, Selecting a storage class is mandatory.
+
+1) Standard Frequently Access (FA):-
+------------------------------------
+1) This is used for frequently access data.
+2) Default Storage class.
+3) Regular Purpose.
+4) No Retrieval charges apply.
+5) Min Object size =0 bytes.
+6) Availability =99.99%
+7) Durability =11 9's.
+
+2) Standard Infrequently Access(IA):-
+-------------------------------------
+1) This is used for infrequently access data.
+2) Retrieval charges apply.
+3) Cheaper than FA.
+4) Min Object size=128KB
+5) Min Duration=30 days.
+6) Availability =99.9%
+7) Durability=11 9's.
+
+3) Glacier :-
+--------------
+1) Infrequently access data.
+2) Archiving Purpose.
+
+Vault:- Container of Archives.
+Archive :- Object /.zip.
+
+1 Archive can be up to 40TB unlimited number of archives.
+1000 vaults.
+3) Retrieval charges apply.
+
+ Glacier Retrieval options:-
+----------------------------
+Expedited =1 to 5 mins
+Standard =3 to 5 hours
+Bulk =5 to 12 hours
+Min Duration = 90 days.
+Availability=99.99%
+Durability=11 9's.
+
+Section 4: Shell Scripting - Nginx Setup (2 Questions)
+
+15) What changes would you need to make to ensure that nginx starts automatically after server reboot?
+    (Mention enabling services.)
+	
+Ans:-
+---
+How to do it:-
+-------------
+Use this command
+
+sudo systemctl  enable nginx
+
+What it does:-
+--------------
+* It creates a symbolic link in /etc/systemd/system/multi-user.target.wants/that points to the Nginx service.
+
+* It tells the system to start nginx automatically whenever the server boots into multi-user mode (normal running mode).
+
+You can also check the service status:-
+--------------------------------------
+sudo systemctl status nginx
+
+If it's enabled, you'll see:-
+---------------------------
+
+Loaded: loaded (/lib/systemd/system/ngin.service; enabled; vendor present:enabled)
+
+
+Section 5: AWS AMIs and Volume Snapshots (2 Questions)
+------------------------------------------------------
+
+16) Explain the steps to create an Amazon Machine Image (AMI) from an existing EC2 instance.
+
+Ans:-
+----
+Steps to create an AMI:-
+----------------------
+
+1) Go to the AWS EC2 Console:-
+-----------------------------
+* Open https://console.aws.amazon.com/ec2/
+
+2) Select Your EC2 Instance:-
+----------------------------
+* In the Instances section, find the instance you want to copy.
+* Select (check) the instance.
+
+3) Create an Image:-
+-------------------
+* With the instance selected, click on Actions > Image and templates > Create image.
+
+4) Configure the Image Settings:-
+-------------------------------
+* Image name:-
+-------------
+Enter a unique and meaningful name(e.g., my-app-server-ami).
+
+* Image description (Optional):-
+-------------------------------
+Add a description like "AMI of production web server".
+
+No reboot option:-
+-----------------
+* Leave unchecked to allow AWS to stop the instance briefly to ensure a clean image.
+* If you check it, the instance won't reboot, but the image may capture files in use.
+
+5) (Optional) Configure Storage:-
+--------------------------------
+* You can modify the size and type (gp2,gp3,etc.) of the EBS volumes included in the AMI.
+* You can add new volumes if needed.
+
+6) Create Image:-
+---------------
+Click Create image.
+AWS starts creating the AMI in the background.
+
+7) Monitor the AMI Creation:-
+---------------------------
+* Go to AMIs in the EC2 dashboard(left sidebar).
+* The status will show "pending" and then change to "available" when done.
+
+After Creating the AMI:-
+-----------------------
+* You can launch new instances based on this AMI-they will have the same OS, Software, configurations, and attached volumes as the original instance.
+* You can also share the AMI with other AWS accounts or make it public if needed.
+
+17) What are EBS volume snapshots? How can you automate regular snapshots for backup purposes?
+Ans:-
+---
+* EBS snapshots are backups of your Elastic Block store(EBS) volumes.
+* A snapshot captures the state and data of a volume at a specific point in time.
+* Snapshots are stored in Amazon S3 (managed by AWS, not directly visible in your s3 buckets).
+* Snapshots are incremental:-
+---------------------------
+* Only the changes since the last snapshot are saved, saving storage costs.
+
+Why are Snapshots Important?
+
+* Easy disaster recovery -if your volume is lost or corrupted, you can restore it from a snapshot.
+* Helps with migraion, duplication, and backup strategies.
+
+How to Automate Regular Snapshots for Backups ?
+
+1) Using Amazon Data Lifecycle Manager (DLM) (Easiest way):-
+-----------------------------------------------------------
+* Go to the EC2 Console > Elastic Block Store > Lifecycle Manager.
+
+Create  a new Lifecycle policy:-
+-------------------------------
+* Policy type: EBS Snapshot Management.
+
+* Target resources : Select volumes by tags (e.g., all volumes with Backup=true).
+
+Set Schedule:-
+------------
+E.g., take a snapshot every 12 hours, keep them for 7 days.
+
+* Set Retention Rules (how many snapshots to keep before old ones are deleted automatically).
+* AWS will now auto-create and auto-cleanup snapshots based on your policy.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
